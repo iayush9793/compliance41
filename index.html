@@ -3,23 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSG41 INBOXING | Intelligence Hub</title>
+    <title>JSG41 INBOXING | Tom & Jerry Lab</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700;800&family=Bungee&display=swap');
         
-        /* Custom Scrollbars */
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            cursor: none !important;
+        }
+
+        .cartoon-font {
+            font-family: 'Bungee', cursive;
+        }
+        
+        /* Disable native cursor across all interactive items */
+        a, button, input, textarea, select, [role="button"], th, td, tr {
+            cursor: none !important;
+        }
+
+        /* Custom Retro Scrollbars */
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #1c130c; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #f59e0b; border-radius: 10px; }
         
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .animate-slide { animation: slideIn 0.4s ease forwards; }
+        .animate-slide { animation: slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
         
         @keyframes shimmer {
             0% { transform: translateX(-100%); }
@@ -30,73 +43,251 @@
             content: "";
             position: absolute;
             top: 0; right: 0; bottom: 0; left: 0;
-            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.15), transparent);
             animation: shimmer 2s infinite;
+        }
+
+        /* Jerry Mouse Custom Follower Cursor Styles */
+        #jerry-cursor {
+            position: fixed;
+            pointer-events: none;
+            width: 55px;
+            height: 55px;
+            z-index: 99999;
+            transform: translate(-30%, -30%);
+            display: none;
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Jerry munching cheese keyframes during hover states */
+        @keyframes jerry-chew {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.15) rotate(8deg); }
+        }
+        .chew-active {
+            animation: jerry-chew 0.25s infinite ease-in-out;
+        }
+
+        /* Retro Dot Patterns and Cartoon Backgrounds */
+        .comic-bg {
+            background-color: #120b06;
+            background-image: radial-gradient(#2a1b10 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+        }
+
+        /* Cartoon Impact Stars */
+        @keyframes star-pop {
+            0% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+        }
+        .impact-star {
+            animation: star-pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
     </style>
 </head>
-<body class="bg-[#020617] text-slate-200 min-h-screen selection:bg-indigo-500/30 overflow-x-hidden custom-scrollbar">
+<body class="comic-bg text-stone-200 min-h-screen selection:bg-amber-500/30 overflow-x-hidden custom-scrollbar relative">
+
+    <!-- Jerry Mouse Custom Follower Cursor -->
+    <div id="jerry-cursor">
+        <svg viewBox="0 0 100 100" width="100%" height="100%" id="jerry-svg">
+            <!-- Jerry Ears -->
+            <circle cx="28" cy="35" r="16" fill="#8B5A2B" stroke="#1c130c" stroke-width="3" />
+            <circle cx="28" cy="35" r="9" fill="#FFB5C5" />
+            <circle cx="72" cy="35" r="16" fill="#8B5A2B" stroke="#1c130c" stroke-width="3" />
+            <circle cx="72" cy="35" r="9" fill="#FFB5C5" />
+            
+            <!-- Jerry Mouse Head Base -->
+            <ellipse cx="50" cy="58" rx="26" ry="22" fill="#8B5A2B" stroke="#1c130c" stroke-width="3" />
+            <ellipse cx="50" cy="62" rx="18" ry="14" fill="#FFE4C4" />
+            
+            <!-- Snout -->
+            <ellipse cx="50" cy="67" rx="11" ry="8" fill="#FFE4C4" stroke="#1c130c" stroke-width="1" />
+            
+            <!-- Cute pink nose -->
+            <circle cx="50" cy="63" r="4.5" fill="#FF5A92" stroke="#1c130c" stroke-width="1.5" />
+            
+            <!-- Jerry Eyes -->
+            <ellipse cx="41" cy="48" rx="4.5" ry="8" fill="#FFF" stroke="#1c130c" stroke-width="2" />
+            <circle cx="41" cy="48" r="2.5" fill="#000" />
+            <ellipse cx="59" cy="48" rx="4.5" ry="8" fill="#FFF" stroke="#1c130c" stroke-width="2" />
+            <circle cx="59" cy="48" r="2.5" fill="#000" />
+            
+            <!-- Whiskers -->
+            <line x1="24" y1="62" x2="10" y2="60" stroke="#1c130c" stroke-width="2" />
+            <line x1="24" y1="67" x2="8" y2="69" stroke="#1c130c" stroke-width="2" />
+            <line x1="76" y1="62" x2="90" y2="60" stroke="#1c130c" stroke-width="2" />
+            <line x1="76" y1="67" x2="92" y2="69" stroke="#1c130c" stroke-width="2" />
+            
+            <!-- Jerry Smile -->
+            <path d="M 44 71 Q 50 78 56 71" fill="none" stroke="#1c130c" stroke-width="2" stroke-linecap="round" />
+
+            <!-- Hidden Tiny Cheese wedge (Fades & Munches in during hover states) -->
+            <g id="jerry-cheese" opacity="0">
+                <path d="M 12 75 L 34 68 L 28 92 Z" fill="#FBBF24" stroke="#1c130c" stroke-width="2" />
+                <circle cx="20" cy="78" r="2" fill="#D97706" />
+                <circle cx="26" cy="85" r="1.5" fill="#D97706" />
+            </g>
+        </svg>
+    </div>
 
     <!-- Sidebar -->
-    <aside class="fixed left-0 top-0 h-full w-72 bg-[#0b0f1a] border-r border-slate-800/40 p-8 flex flex-col gap-10 hidden lg:flex z-50">
+    <aside class="fixed left-0 top-0 h-full w-72 bg-[#1b110a] border-r border-[#f59e0b]/20 p-8 flex flex-col gap-8 hidden lg:flex z-50">
+        <!-- Tom & Jerry Vintage Title Logo -->
         <div class="flex items-center gap-4">
-            <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-indigo-500/20">
-                <i class="fa-solid fa-bolt-lightning text-white text-2xl"></i>
+            <div class="w-14 h-14 bg-gradient-to-br from-[#f59e0b] to-[#b45309] rounded-2xl flex items-center justify-center shadow-xl shadow-[#f59e0b]/10 relative group overflow-visible">
+                <!-- Cute Cheese slice corner badge -->
+                <div class="absolute -top-1 -right-1 w-6 h-6 bg-amber-400 rounded-full border-2 border-[#1b110a] flex items-center justify-center shadow">
+                    <span class="text-[9px] text-amber-950 font-bold"><i class="fa-solid fa-cheese"></i></span>
+                </div>
+                <!-- Mini Tom face vector inside logo box -->
+                <svg viewBox="0 0 100 100" class="w-10 h-10">
+                    <circle cx="50" cy="50" r="45" fill="#5A6B7C" />
+                    <!-- Tom Inner Ears -->
+                    <polygon points="15,20 30,5 35,32" fill="#FFB5C5" stroke="#1c130c" stroke-width="1.5" />
+                    <polygon points="85,20 70,5 65,32" fill="#FFB5C5" stroke="#1c130c" stroke-width="1.5" />
+                    <!-- White muzzle -->
+                    <ellipse cx="50" cy="65" rx="20" ry="14" fill="#FFF" />
+                    <!-- Tom yellow eyes -->
+                    <ellipse cx="38" cy="40" rx="9" ry="14" fill="#FBBF24" stroke="#1c130c" stroke-width="2" />
+                    <ellipse cx="38" cy="40" rx="4" ry="9" fill="#059669" />
+                    <ellipse cx="62" cy="40" rx="9" ry="14" fill="#FBBF24" stroke="#1c130c" stroke-width="2" />
+                    <ellipse cx="62" cy="40" rx="4" ry="9" fill="#059669" />
+                    <!-- Red nose -->
+                    <circle cx="50" cy="54" r="5" fill="#E60012" />
+                </svg>
             </div>
             <div>
-                <h1 class="font-extrabold text-xl tracking-tighter text-white leading-none">JSG41</h1>
-                <p class="text-[10px] uppercase tracking-[0.2em] font-bold text-indigo-400">Inboxing</p>
+                <h1 class="cartoon-font text-xl text-amber-400 tracking-tight leading-none">JSG41 LAB</h1>
+                <p class="text-[10px] uppercase tracking-[0.18em] font-extrabold text-stone-400">Cat & Mouse Portal</p>
             </div>
         </div>
 
         <nav class="flex flex-col gap-2">
-            <div class="text-[10px] uppercase font-bold text-slate-500 tracking-widest px-4 mb-4">Core Systems</div>
-            <a href="#" class="flex items-center gap-4 px-5 py-4 rounded-2xl bg-indigo-600 text-white shadow-xl shadow-indigo-600/30 transition-all">
-                <i class="fa-solid fa-microchip"></i>
-                <span class="font-bold text-sm tracking-tight">Subject Extractor</span>
+            <div class="text-[10px] uppercase font-black text-stone-500 tracking-widest px-4 mb-2">Retro Gadgets</div>
+            
+            <a href="#" class="flex items-center gap-4 px-5 py-4 rounded-2xl bg-[#f59e0b] text-stone-950 shadow-lg shadow-amber-500/20 transition-all">
+                <i class="fa-solid fa-store text-base"></i>
+                <span class="font-black text-sm tracking-tight">Mousehole Gate</span>
             </a>
-            <a href="#common-section" class="flex items-center gap-4 px-5 py-4 rounded-2xl hover:bg-slate-800/50 text-slate-400 transition-all border border-transparent hover:border-slate-700/50">
-                <i class="fa-solid fa-chart-line"></i>
-                <span class="font-bold text-sm tracking-tight">Deliverability Stats</span>
+            
+            <a href="#common-section" class="flex items-center gap-4 px-5 py-4 rounded-2xl hover:bg-amber-500/10 text-stone-400 transition-all border border-transparent hover:border-amber-500/20">
+                <i class="fa-solid fa-paw"></i>
+                <span class="font-black text-sm tracking-tight">Whack-A-Node Stats</span>
             </a>
         </nav>
 
-        <div class="mt-auto p-6 bg-slate-900/40 rounded-3xl border border-slate-800/40">
-            <p class="text-[10px] text-slate-500 mb-3 uppercase tracking-[0.15em] font-black">Active Nodes</p>
+        <!-- Cute Tom & Jerry Wh whiskers status box -->
+        <div class="p-4 bg-[#23170e] rounded-3xl border border-amber-500/10 flex flex-col gap-3 relative overflow-hidden">
+            <div class="absolute -right-6 -bottom-6 w-16 h-16 opacity-10">
+                <i class="fa-solid fa-cheese text-5xl text-amber-500"></i>
+            </div>
+            <div class="flex items-center gap-2">
+                <!-- Mini Jerry Head Icon -->
+                <svg viewBox="0 0 100 100" class="w-8 h-8">
+                    <circle cx="28" cy="35" r="14" fill="#8B5A2B" />
+                    <circle cx="72" cy="35" r="14" fill="#8B5A2B" />
+                    <ellipse cx="50" cy="58" rx="22" ry="18" fill="#8B5A2B" />
+                    <ellipse cx="50" cy="62" rx="14" ry="11" fill="#FFE4C4" />
+                    <circle cx="50" cy="61" r="3.5" fill="#FF5A92" />
+                </svg>
+                <span class="text-[10px] font-black text-amber-400 tracking-widest uppercase">Jerry's Radar</span>
+            </div>
+            <div class="text-[11px] text-stone-400 leading-relaxed">
+                "Baiting all target inbox pathways with prime Swiss cheese!"
+            </div>
+        </div>
+
+        <div class="mt-auto p-5 bg-[#120b06] rounded-3xl border border-amber-500/10">
+            <p class="text-[10px] text-stone-500 mb-3 uppercase tracking-[0.15em] font-black">ACTIVE NODE TRAPS</p>
             <div class="space-y-3">
                 <div class="flex items-center justify-between text-xs font-bold">
-                    <span class="text-slate-400">Google API</span>
-                    <span class="text-emerald-500 flex items-center gap-2">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="text-stone-400">Google API</span>
+                    <span class="text-emerald-400 flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                         ONLINE
                     </span>
                 </div>
                 <div class="flex items-center justify-between text-xs font-bold">
-                    <span class="text-slate-400">Accounts</span>
-                    <span id="sidebar-accounts-count" class="text-white">12 Loaded</span>
+                    <span class="text-stone-400">Nodes</span>
+                    <span id="sidebar-accounts-count" class="text-amber-400">12 Loaded</span>
                 </div>
             </div>
         </div>
     </aside>
 
     <!-- Main Content -->
-    <main class="lg:ml-72 p-6 md:p-12 max-w-6xl mx-auto">
-        <header class="mb-10">
-            <h2 class="text-4xl font-black text-white tracking-tight mb-2">Subject & Delivery <span class="text-indigo-500">Hub</span></h2>
-            <p class="text-slate-400 text-base font-medium">Extracting last 3 subject lines, timestamps, and folders across <span id="header-accounts-count" class="text-indigo-400 font-bold">12</span> master accounts.</p>
+    <main class="lg:ml-72 p-6 md:p-12 max-w-6xl mx-auto relative z-10">
+        
+        <!-- Header Section with Vintage Tom and Jerry Character Frame -->
+        <header class="mb-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 bg-[#1b110a] p-8 rounded-[2.5rem] border border-[#f59e0b]/20 relative overflow-hidden">
+            <!-- Background sunburst element -->
+            <div class="absolute -top-12 -right-12 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="space-y-2 max-w-xl">
+                <div class="flex items-center gap-2">
+                    <span class="bg-[#E60012] text-white text-[9px] font-black tracking-widest px-2.5 py-1 rounded-full uppercase">Whack-A-Mail System</span>
+                    <span class="bg-[#f59e0b]/20 text-[#f59e0b] text-[9px] font-black tracking-widest px-2.5 py-1 rounded-full uppercase">Jerry Traps Armed</span>
+                </div>
+                <h2 class="cartoon-font text-4xl text-white tracking-tight leading-none">Jerry's Inbox <span class="text-amber-400">Mousehole</span></h2>
+                <p class="text-stone-400 text-sm font-medium">Tracking target domain logs inside <span id="header-accounts-count" class="text-[#f59e0b] font-black">12</span> dynamic user trap nodes.</p>
+            </div>
+
+            <!-- Beautiful inline retro Tom & Jerry illustration -->
+            <div class="flex items-center gap-4 bg-[#120b06]/60 p-4 rounded-3xl border border-amber-500/10">
+                <!-- Tom Head SVG -->
+                <div class="text-center">
+                    <svg viewBox="0 0 100 100" class="w-16 h-16 mx-auto hover:scale-105 transition-transform duration-300">
+                        <circle cx="50" cy="50" r="45" fill="#5A6B7C" stroke="#1c130c" stroke-width="3" />
+                        <ellipse cx="50" cy="65" rx="18" ry="12" fill="#FFF" />
+                        <!-- Red nose -->
+                        <circle cx="50" cy="54" r="5" fill="#E60012" />
+                        <!-- Whiskers -->
+                        <line x1="32" y1="58" x2="15" y2="52" stroke="#1c130c" stroke-width="2" />
+                        <line x1="32" y1="63" x2="10" y2="63" stroke="#1c130c" stroke-width="2" />
+                        <line x1="68" y1="58" x2="85" y2="52" stroke="#1c130c" stroke-width="2" />
+                        <line x1="68" y1="63" x2="90" y2="63" stroke="#1c130c" stroke-width="2" />
+                        <!-- Yellow Eyes -->
+                        <ellipse cx="38" cy="40" rx="9" ry="14" fill="#FBBF24" stroke="#1c130c" stroke-width="2" />
+                        <ellipse cx="38" cy="40" rx="3" ry="8" fill="#000" />
+                        <ellipse cx="62" cy="40" rx="9" ry="14" fill="#FBBF24" stroke="#1c130c" stroke-width="2" />
+                        <ellipse cx="62" cy="40" rx="3" ry="8" fill="#000" />
+                    </svg>
+                    <span class="text-[9px] font-black tracking-widest text-[#5A6B7C] block mt-1 uppercase">Tom</span>
+                </div>
+                
+                <div class="w-px h-12 bg-stone-800"></div>
+
+                <!-- Jerry Head SVG -->
+                <div class="text-center">
+                    <svg viewBox="0 0 100 100" class="w-16 h-16 mx-auto hover:scale-105 transition-transform duration-300">
+                        <circle cx="28" cy="35" r="16" fill="#8B5A2B" stroke="#1c130c" stroke-width="2" />
+                        <circle cx="72" cy="35" r="16" fill="#8B5A2B" stroke="#1c130c" stroke-width="2" />
+                        <ellipse cx="50" cy="58" rx="26" ry="22" fill="#8B5A2B" stroke="#1c130c" stroke-width="2" />
+                        <ellipse cx="50" cy="62" rx="18" ry="14" fill="#FFE4C4" />
+                        <circle cx="50" cy="62" r="4.5" fill="#FF5A92" />
+                        <!-- Eyes -->
+                        <ellipse cx="41" cy="48" rx="4.5" ry="8" fill="#FFF" stroke="#1c130c" stroke-width="1.5" />
+                        <circle cx="41" cy="48" r="2" fill="#000" />
+                        <ellipse cx="59" cy="48" rx="4.5" ry="8" fill="#FFF" stroke="#1c130c" stroke-width="1.5" />
+                        <circle cx="59" cy="48" r="2" fill="#000" />
+                    </svg>
+                    <span class="text-[9px] font-black tracking-widest text-amber-500 block mt-1 uppercase">Jerry</span>
+                </div>
+            </div>
         </header>
 
         <!-- TOP: Commonality Detection & Action triggers -->
         <section id="common-section" class="hidden w-full pb-10">
-            <div class="w-full bg-gradient-to-r from-[#0b0f1a] to-[#0f1425] border-t-2 border-indigo-500/60 rounded-[2.5rem] p-8 shadow-2xl flex flex-col justify-between gap-6">
+            <div class="w-full bg-[#1b110a] border-t-2 border-[#f59e0b] rounded-[2.5rem] p-8 shadow-2xl flex flex-col justify-between gap-6">
                 <div>
-                    <label class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-2 block">IDENTIFIED COMMON SUBJECT</label>
+                    <label class="text-[10px] font-black text-amber-400 uppercase tracking-widest mb-2 block">CONVERGED SUBJECT TRAP IDENTIFIED</label>
                     <div class="relative group">
                         <input id="common-subject-input" readonly
-                            class="w-full bg-[#020617] border border-indigo-500/20 rounded-2xl py-4 pl-6 pr-16 text-white font-bold text-base focus:outline-none transition-all group-hover:border-indigo-500/40"
-                            placeholder="Analyzing data convergence...">
+                            class="w-full bg-[#120b06] border border-[#f59e0b]/30 rounded-2xl py-4 pl-6 pr-16 text-white font-bold text-base focus:outline-none transition-all group-hover:border-[#f59e0b]/50"
+                            placeholder="Awaiting mouse trap triggers...">
                         <button id="copy-btn" 
-                            class="absolute right-2 top-1/2 -translate-y-1/2 p-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl transition-all active:scale-90 shadow-lg shadow-indigo-600/30">
+                            class="absolute right-2 top-1/2 -translate-y-1/2 p-3.5 bg-amber-500 hover:bg-amber-600 text-stone-950 rounded-xl transition-all active:scale-90 shadow-lg shadow-amber-500/20">
                             <i class="fa-solid fa-copy text-base"></i>
                         </button>
                     </div>
@@ -104,33 +295,33 @@
                 
                 <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-6">
                     <div class="flex-grow">
-                        <span class="text-[10px] text-slate-400 font-black uppercase tracking-widest block mb-2">Subject Match Convergence</span>
-                        <div class="w-full bg-slate-950 h-2.5 rounded-full overflow-hidden border border-slate-800">
-                            <div id="match-bar" class="bg-indigo-500 h-full w-0 transition-all duration-500"></div>
+                        <span class="text-[10px] text-stone-400 font-black uppercase tracking-widest block mb-2">Subject Sync Convergence Rate</span>
+                        <div class="w-full bg-[#120b06] h-3 rounded-full overflow-hidden border border-stone-800">
+                            <div id="match-bar" class="bg-gradient-to-r from-amber-500 to-red-500 h-full w-0 transition-all duration-500"></div>
                         </div>
                     </div>
-                    <div class="flex items-center justify-center px-6 py-3 bg-indigo-500/5 rounded-2xl border border-indigo-500/10 min-w-[100px]">
+                    <div class="flex items-center justify-center px-6 py-3 bg-amber-500/5 rounded-2xl border border-amber-500/10 min-w-[100px]">
                         <div class="text-center">
-                            <span class="text-[9px] text-indigo-300 font-black uppercase tracking-tighter block leading-none">Match Rate</span>
-                            <span id="match-percent" class="text-2xl font-black text-indigo-400 italic">0%</span>
+                            <span class="text-[9px] text-amber-400 font-black uppercase tracking-tighter block leading-none">Match Rate</span>
+                            <span id="match-percent" class="text-2xl font-black text-[#f59e0b] italic">0%</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Interactive Preview Trigger: Displayed only if mail landed in Muskan's Account -->
-                <div id="preview-trigger-container" class="hidden animate-slide mt-2 p-4 bg-emerald-500/5 rounded-2xl border border-emerald-500/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div id="preview-trigger-container" class="hidden animate-slide mt-2 p-5 bg-amber-500/5 rounded-2xl border border-amber-500/20 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-500/15 flex items-center justify-center text-emerald-400 flex-shrink-0">
-                            <i class="fa-solid fa-circle-check text-lg"></i>
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/15 flex items-center justify-center text-amber-400 flex-shrink-0">
+                            <i class="fa-solid fa-cheese text-2xl animate-pulse"></i>
                         </div>
                         <div>
-                            <h5 id="preview-trigger-title" class="text-sm font-bold text-white leading-tight">Mail Detected in Muskan's Account</h5>
-                            <p id="preview-trigger-desc" class="text-[11px] text-slate-400">Payload verified. Preview is pulled strictly from <strong class="text-indigo-400">Muskan Sharma</strong> (musk9090) to inspect actual inbox layout.</p>
+                            <h5 id="preview-trigger-title" class="text-sm font-bold text-white leading-tight">Jerry Sighted Inside Node Musk9090</h5>
+                            <p id="preview-trigger-desc" class="text-[11px] text-stone-400">Target payload caught. Peek inside the mousehole directly from <strong class="text-amber-400">Muskan Sharma</strong> (musk9090).</p>
                         </div>
                     </div>
-                    <button id="show-preview-btn" class="w-full sm:w-auto px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl text-xs font-black uppercase tracking-wider transition-all shadow-lg shadow-indigo-600/30 active:scale-95 flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-magnifying-glass-chart"></i>
-                        Show Mail Preview
+                    <button id="show-preview-btn" class="w-full sm:w-auto px-6 py-3 bg-[#E60012] hover:bg-[#c2000f] text-white rounded-xl text-xs font-black uppercase tracking-wider transition-all shadow-lg shadow-[#E60012]/30 active:scale-95 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-door-open"></i>
+                        Peek Inside Jerry's Hole
                     </button>
                 </div>
             </div>
@@ -139,25 +330,25 @@
         <div class="flex flex-col gap-8">
             <!-- TOP: Target Domain Entry -->
             <section class="w-full">
-                <div class="bg-[#0b0f1a] border border-slate-800/60 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden">
+                <div class="bg-[#1b110a] border border-[#f59e0b]/20 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden">
                     <div class="flex flex-col lg:flex-row gap-8 items-start relative z-10">
                         <div class="flex-grow w-full">
                             <div class="flex items-center justify-between mb-4">
-                                <label class="text-xs font-black text-slate-500 uppercase tracking-[0.2em]">Target Domains</label>
-                                <span class="text-[10px] bg-slate-800 text-slate-400 px-3 py-1 rounded-full font-bold">MULTIPLE INPUT ENABLED</span>
+                                <label class="text-xs font-black text-amber-400 uppercase tracking-[0.2em]">Target Domains (Sender Trap Logs)</label>
+                                <span class="text-[10px] bg-amber-500/10 text-amber-400 px-3 py-1 rounded-full font-extrabold border border-amber-500/20">TOM & JERRY INBOX TRAPS</span>
                             </div>
                             <textarea id="domain-input" 
-                                class="w-full h-36 bg-[#020617] border border-slate-800/80 rounded-2xl p-6 text-slate-200 placeholder:text-slate-700 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/40 transition-all resize-none text-sm font-mono leading-relaxed"
+                                class="w-full h-36 bg-[#120b06] border border-[#f59e0b]/20 rounded-2xl p-6 text-stone-200 placeholder:text-stone-600 focus:outline-none focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500/50 transition-all resize-none text-sm font-mono leading-relaxed"
                                 placeholder="example-sender.com&#10;delivery-node.net"></textarea>
                         </div>
                         <div class="w-full lg:w-72 lg:pt-8 flex flex-col gap-3">
                             <button id="sync-btn" 
-                                class="group w-full py-5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-2xl font-black text-sm flex items-center justify-center gap-3 transition-all shadow-xl shadow-indigo-600/20 active:scale-[0.97]">
-                                <i class="fa-solid fa-bolt-lightning group-hover:rotate-12 transition-transform"></i>
-                                <span class="tracking-widest uppercase">Sync Network</span>
+                                class="group w-full py-5 bg-amber-500 hover:bg-amber-600 disabled:opacity-50 disabled:cursor-not-allowed text-stone-950 rounded-2xl font-black text-sm flex items-center justify-center gap-3 transition-all shadow-xl shadow-amber-500/20 active:scale-[0.97]">
+                                <i class="fa-solid fa-paw group-hover:rotate-12 transition-transform"></i>
+                                <span class="tracking-widest uppercase">Arm Cheese Traps</span>
                             </button>
-                            <button id="clear-btn" class="hidden w-full py-3 text-slate-500 hover:text-red-400 text-[10px] font-black transition-colors uppercase tracking-widest">
-                                <i class="fa-solid fa-trash-can mr-2"></i> Clear Workspace
+                            <button id="clear-btn" class="hidden w-full py-3 text-stone-500 hover:text-[#E60012] text-[10px] font-black transition-colors uppercase tracking-widest">
+                                <i class="fa-solid fa-trash-can mr-2"></i> Reset Lab Table
                             </button>
                         </div>
                     </div>
@@ -166,30 +357,35 @@
 
             <!-- MIDDLE: Network Feed with Active Spam Filtering control -->
             <section class="w-full">
-                <div class="bg-[#0b0f1a] border border-slate-800/60 rounded-[2.5rem] overflow-hidden shadow-2xl min-h-[450px] flex flex-col">
-                    <div class="px-8 py-6 border-b border-slate-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900/20">
+                <div class="bg-[#1b110a] border border-[#f59e0b]/20 rounded-[2.5rem] overflow-hidden shadow-2xl min-h-[450px] flex flex-col">
+                    <div class="px-8 py-6 border-b border-amber-500/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#23170e]/40">
                         <h3 class="text-base font-black text-white flex items-center gap-3 tracking-tight">
-                            DATA EXTRACTION FEED
-                            <div id="scan-progress" class="hidden h-1 w-32 bg-slate-800 rounded-full overflow-hidden">
-                                <div class="h-full bg-indigo-500 animate-[loading_2s_infinite]"></div>
+                            DATA TRAP PIPELINE
+                            <div id="scan-progress" class="hidden h-1.5 w-32 bg-[#120b06] rounded-full overflow-hidden">
+                                <div class="h-full bg-amber-500 animate-[loading_2s_infinite]"></div>
                             </div>
                         </h3>
                         
                         <!-- Toggle Button: Show/Hide Spam Emails dynamically -->
-                        <button id="toggle-spam-btn" class="hidden flex items-center gap-2 px-4 py-2 bg-slate-900 border border-slate-800 text-xs font-black text-slate-400 hover:text-white hover:border-slate-700/60 rounded-xl transition-all active:scale-95">
-                            <i id="toggle-spam-icon" class="fa-solid fa-eye-slash text-slate-500"></i>
+                        <button id="toggle-spam-btn" class="hidden flex items-center gap-2 px-4 py-2 bg-[#120b06] border border-[#f59e0b]/20 text-xs font-black text-amber-400 hover:text-white hover:border-amber-500/40 rounded-xl transition-all active:scale-95">
+                            <i id="toggle-spam-icon" class="fa-solid fa-eye-slash text-stone-500"></i>
                             <span id="toggle-spam-text">Show Spam Mails</span>
-                            <span id="spam-counter" class="bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2 py-0.5 rounded text-[10px]">0 Hidden</span>
+                            <span id="spam-counter" class="bg-[#E60012]/10 text-[#E60012] border border-[#E60012]/20 px-2 py-0.5 rounded text-[10px]">0 Hidden</span>
                         </button>
                     </div>
 
-                    <!-- Empty State -->
+                    <!-- Empty State: Custom illustration representing Tom watching the mousehole -->
                     <div id="empty-state" class="flex-grow flex flex-col items-center justify-center py-24 text-center">
-                        <div class="w-20 h-20 bg-indigo-500/5 rounded-full flex items-center justify-center mb-6 border border-indigo-500/10">
-                            <i class="fa-solid fa-server text-3xl text-indigo-500/30"></i>
+                        <div class="w-24 h-24 bg-amber-500/5 rounded-full flex items-center justify-center mb-6 border border-amber-500/10 relative group">
+                            <!-- Mouse Trap Outline SVG -->
+                            <svg viewBox="0 0 100 100" class="w-16 h-16 opacity-30 group-hover:opacity-60 transition-opacity">
+                                <rect x="15" y="30" width="70" height="40" rx="5" fill="none" stroke="#f59e0b" stroke-width="4" />
+                                <circle cx="50" cy="50" r="10" fill="#E60012" />
+                                <line x1="30" y1="50" x2="70" y2="50" stroke="#f59e0b" stroke-width="3" />
+                            </svg>
                         </div>
-                        <h4 class="text-lg font-bold text-slate-400 mb-1">Awaiting Domain Sequence</h4>
-                        <p class="text-xs text-slate-600 font-bold uppercase tracking-widest">Input target to initiate sync</p>
+                        <h4 class="text-lg font-bold text-stone-400 mb-1">Awaiting Trap Location Nodes</h4>
+                        <p class="text-xs text-stone-600 font-black uppercase tracking-widest">Deploy bait coordinates to begin</p>
                     </div>
 
                     <!-- Feed Results Container -->
@@ -197,14 +393,14 @@
                         <div class="overflow-x-auto custom-scrollbar">
                             <table class="w-full text-left border-collapse">
                                 <thead>
-                                    <tr class="text-slate-500 text-[10px] uppercase tracking-[0.2em] font-black border-b border-slate-800/60">
-                                        <th class="px-8 py-6">Identity</th>
-                                        <th class="px-8 py-6">Domain</th>
-                                        <th class="px-8 py-6">Inbox / Spam Subjects (Last 3)</th>
-                                        <th class="px-8 py-6 text-right">Verification</th>
+                                    <tr class="text-stone-500 text-[10px] uppercase tracking-[0.2em] font-black border-b border-amber-500/10">
+                                        <th class="px-8 py-6">Trap Identity</th>
+                                        <th class="px-8 py-6">Sender Domain</th>
+                                        <th class="px-8 py-6">Caught Inbox / Spam Subjects (Last 3)</th>
+                                        <th class="px-8 py-6 text-right">Trap Status</th>
                                     </tr>
                                 </thead>
-                                <tbody id="results-body" class="divide-y divide-slate-800/40">
+                                <tbody id="results-body" class="divide-y divide-amber-500/10">
                                     <!-- Rows injected dynamically -->
                                 </tbody>
                             </table>
@@ -215,52 +411,121 @@
         </div>
     </main>
 
-    <!-- HIGH-FIDELITY SECURE MAIL PREVIEW MODAL -->
-    <div id="preview-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden opacity-0 transition-all duration-300">
-        <div class="bg-[#0b0f1a] border border-slate-800 w-full max-w-4xl rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[85vh] transform scale-95 transition-all duration-300">
+    <!-- HIGH-FIDELITY BASEBOARD MOUSEHOLE PREVIEW MODAL -->
+    <div id="preview-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#120b06]/85 backdrop-blur-sm hidden opacity-0 transition-all duration-300">
+        <!-- Styled as Jerry's cozy baseboard mousehole portal -->
+        <div class="bg-[#1b110a] border-8 border-[#3d2414] w-full max-w-4xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[85vh] transform scale-95 transition-all duration-300 relative">
+            
+            <!-- Simulated baseboard molding arch details -->
+            <div class="absolute inset-x-0 top-0 h-4 bg-[#23150c] border-b border-amber-500/10"></div>
+
             <!-- Modal Header -->
-            <div class="px-8 py-6 border-b border-slate-800/60 bg-slate-900/20 flex items-center justify-between">
+            <div class="px-8 py-6 border-b border-stone-800 bg-[#23170e]/40 flex items-center justify-between">
                 <div>
-                    <span class="text-[10px] bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2.5 py-1 rounded-full font-black uppercase tracking-wider">Muskan Sharma Node Audit</span>
+                    <span class="text-[10px] bg-amber-500/15 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-full font-black uppercase tracking-wider">Jerry's Cheese Room Logs</span>
                     <h3 id="modal-subject" class="text-lg font-black text-white mt-1.5 line-clamp-1">Email Subject</h3>
                 </div>
-                <button id="close-modal-btn" class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 hover:bg-slate-800 hover:text-white flex items-center justify-center transition-all">
+                <button id="close-modal-btn" class="w-10 h-10 rounded-full bg-[#120b06] border border-amber-500/20 hover:bg-amber-500/20 hover:text-white flex items-center justify-center transition-all">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
+            
             <!-- Modal Metadata Panel -->
-            <div class="px-8 py-4 bg-slate-900/40 border-b border-slate-800/40 flex flex-wrap gap-4 items-center text-xs text-slate-400 font-semibold">
+            <div class="px-8 py-4 bg-[#23170e]/20 border-b border-stone-800/40 flex flex-wrap gap-4 items-center text-xs text-stone-400 font-semibold">
                 <div class="flex items-center gap-2">
-                    <span class="text-slate-500">Audited Node:</span>
+                    <span class="text-stone-500">Audited Trap:</span>
                     <span id="modal-account" class="text-emerald-400 font-bold">musk9090 (Muskan Sharma)</span>
                 </div>
-                <div class="w-1.5 h-1.5 rounded-full bg-slate-800"></div>
+                <div class="w-1.5 h-1.5 rounded-full bg-stone-800"></div>
                 <div class="flex items-center gap-2">
-                    <span class="text-slate-500">Network Sync Time:</span>
+                    <span class="text-stone-500">Bait Trigger Time:</span>
                     <span id="modal-time" class="text-white font-mono">Jun 8 @ 02:57 PM</span>
                 </div>
-                <div class="w-1.5 h-1.5 rounded-full bg-slate-800"></div>
-                <div class="flex items-center gap-1 bg-amber-500/15 text-amber-400 px-2 py-0.5 rounded text-[10px] font-bold">
-                    <i class="fa-solid fa-user-secret"></i> Unopened State Preserved
+                <div class="w-1.5 h-1.5 rounded-full bg-stone-800"></div>
+                <div class="flex items-center gap-1 bg-amber-500/15 text-[#f59e0b] px-2.5 py-1 rounded text-[10px] font-black uppercase tracking-wider">
+                    <i class="fa-solid fa-mouse-pointer"></i> Secure Viewport Active
                 </div>
             </div>
-            <!-- Modal Body Content (Decoded iFrame Viewport) -->
-            <div class="flex-grow overflow-y-auto p-8 bg-[#020617] relative min-h-[350px]">
-                <!-- fallback raw body layout -->
-                <div id="modal-body-fallback" class="hidden text-slate-300 whitespace-pre-wrap leading-relaxed font-mono text-sm"></div>
-                <!-- rich sandboxed viewport frame to isolate HTML content styles -->
+            
+            <!-- Modal Body Content -->
+            <div class="flex-grow overflow-y-auto p-8 bg-stone-950 relative min-h-[350px]">
+                <div id="modal-body-fallback" class="hidden text-stone-300 whitespace-pre-wrap leading-relaxed font-mono text-sm"></div>
                 <iframe id="modal-body-frame" class="w-full h-full min-h-[380px] border-0 rounded-2xl bg-white hidden" sandbox="allow-same-origin"></iframe>
             </div>
         </div>
     </div>
 
-    <!-- NOTIFICATION BOX FOR FAILED MUSKAN PREVIEWS -->
+    <!-- 100% INBOX CELEBRATION MODAL: Tom & Jerry Scuffle Fight Cloud Overlay with image.gif -->
+    <div id="celebration-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#120b06]/95 backdrop-blur-md hidden opacity-0 transition-all duration-500">
+        <div class="relative w-full max-w-2xl bg-gradient-to-b from-[#1b110a] to-[#120b06] border-4 border-amber-500 rounded-[3rem] p-8 shadow-[0_0_50px_rgba(245,158,11,0.3)] overflow-hidden flex flex-col items-center text-center">
+            
+            <!-- Sparkles/Impact Layer Canvas -->
+            <canvas id="celebration-canvas" class="absolute inset-0 pointer-events-none w-full h-full rounded-[3rem]"></canvas>
+
+            <h3 class="cartoon-font text-3xl text-amber-400 tracking-widest uppercase mb-4 drop-shadow-md">
+                💥 100% TRAP LOCK! 💥
+            </h3>
+            <p class="text-stone-400 text-xs uppercase tracking-widest font-bold mb-4">Every trap successfully whacked the target inbox!</p>
+
+            <!-- Rumbling Tom & Jerry Fight GIF Container -->
+            <div class="relative w-80 h-60 my-4 flex items-center justify-center bg-stone-900 border-4 border-amber-500 rounded-3xl overflow-hidden shadow-2xl">
+                <!-- Displays image.gif with Giphy fallback so it loads out of the box -->
+                <img id="celebration-gif" src="image.gif" onerror="this.onerror=null; this.src='https://media.giphy.com/media/l41YptBCB3rAnD6p2/giphy.gif';" alt="Tom & Jerry Fight" class="w-full h-full object-contain">
+            </div>
+
+            <!-- Dialogue Bubble: Tom Stops the scuffle & Speaks -->
+            <div class="flex flex-col items-center gap-3 mt-6 z-30 w-full justify-center">
+                <div class="relative bg-white text-stone-950 font-black text-sm px-6 py-3.5 rounded-2xl shadow-xl border-4 border-amber-500 max-w-sm after:content-[''] after:absolute after:bottom-[-16px] after:left-1/2 after:-translate-x-1/2 after:border-t-[16px] after:border-t-white after:border-x-[12px] after:border-x-transparent">
+                    <span id="tom-speech-bubble" class="cartoon-font text-amber-600 tracking-wide">"100% Inbox! Time to rest, little mouse!"</span>
+                </div>
+                
+                <!-- Tom & Jerry posing side-by-side -->
+                <div class="flex items-end gap-2 mt-2">
+                    <!-- Victorious Tom Head -->
+                    <svg viewBox="0 0 100 100" class="w-24 h-24">
+                        <circle cx="50" cy="50" r="45" fill="#5A6B7C" stroke="#1c130c" stroke-width="3" />
+                        <ellipse cx="50" cy="65" rx="18" ry="12" fill="#FFF" />
+                        <circle cx="50" cy="54" r="5" fill="#E60012" />
+                        <!-- Big laughing mouth -->
+                        <path d="M 32 64 Q 50 82 68 64" fill="none" stroke="#1c130c" stroke-width="3" />
+                        <!-- Happy eyes -->
+                        <path d="M 28 38 Q 38 32 44 42" fill="none" stroke="#1c130c" stroke-width="3.5" stroke-linecap="round" />
+                        <path d="M 56 42 Q 62 32 72 38" fill="none" stroke="#1c130c" stroke-width="3.5" stroke-linecap="round" />
+                    </svg>
+                    <!-- Smug Jerry Head -->
+                    <svg viewBox="0 0 100 100" class="w-16 h-16">
+                        <circle cx="28" cy="35" r="14" fill="#8B5A2B" stroke="#1c130c" stroke-width="2" />
+                        <circle cx="72" cy="35" r="14" fill="#8B5A2B" stroke="#1c130c" stroke-width="2" />
+                        <ellipse cx="50" cy="58" rx="24" ry="20" fill="#8B5A2B" stroke="#1c130c" stroke-width="2" />
+                        <ellipse cx="50" cy="62" rx="16" ry="12" fill="#FFE4C4" />
+                        <circle cx="50" cy="62" r="4" fill="#FF5A92" />
+                        <!-- Laughing eyes -->
+                        <path d="M 36 48 Q 41 42 45 48" fill="none" stroke="#1c130c" stroke-width="2.5" stroke-linecap="round" />
+                        <path d="M 55 48 Q 59 42 64 48" fill="none" stroke="#1c130c" stroke-width="2.5" stroke-linecap="round" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Action buttons inside modal -->
+            <div class="flex gap-4 mt-8 z-30">
+                <button id="celebration-open-portal-btn" class="px-6 py-3.5 bg-[#E60012] hover:bg-[#c2000f] text-white font-black rounded-2xl text-xs uppercase tracking-wider transition-all shadow-lg shadow-[#E60012]/30 active:scale-95 flex items-center gap-2">
+                    <i class="fa-solid fa-door-open"></i> Step Inside Jerry's Room
+                </button>
+                <button id="celebration-close-btn" class="px-6 py-3.5 bg-stone-800 hover:bg-stone-700 text-stone-200 font-black rounded-2xl text-xs uppercase tracking-wider transition-all active:scale-95">
+                    Dismiss Scuffle
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- NOTIFICATION BOX FOR FAILED PORTAL LINKS -->
     <div id="toast-notification" class="fixed bottom-6 right-6 z-50 transform translate-y-12 opacity-0 transition-all duration-300 pointer-events-none">
-        <div class="bg-rose-900/95 border border-rose-500/30 text-rose-100 px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 font-semibold text-sm">
-            <i class="fa-solid fa-triangle-exclamation text-rose-400 text-lg"></i>
+        <div class="bg-red-950/95 border border-[#E60012]/30 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 font-semibold text-sm">
+            <i class="fa-solid fa-triangle-exclamation text-[#f59e0b] text-lg"></i>
             <div>
-                <p class="font-bold">Muskan's Node Sync Issue</p>
-                <p class="text-xs text-rose-300/80">This subject line was not retrieved from the musk9090 node or did not hit the inbox.</p>
+                <p class="font-black">Trap Sync Interrupted</p>
+                <p class="text-xs text-red-200">The subject line did not land in musk9090 node or expired.</p>
             </div>
         </div>
     </div>
@@ -271,25 +536,22 @@
             clientSecret: "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",
             accounts: [
                 { name: "agkartik8429", token: "1//0gesjD1QK4L1rCgYIARAAGBASNwF-L9Ir-DFo5-uUhfAIpJ1Fqu7foJmdN_gNTlcl_6sHYhXNfka1hsIpZfV0tVIh3Yas92MFvA0" },
-                 { name: "liveseedforall", token: "1//0gNNNmMZrjuhzCgYIARAAGBASNwF-L9Ire_zIx2bbnlq3L0wEhELUUmAua3zMtZqCOrLz1RnSu3ZG9DDojjURxcmtEVHkObrknVY" },
-                   { name: "agkar9090", token: "1//0gQeu8MkAUYg_CgYIARAAGBASNwF-L9IrmgY1f9Mw1VUva2vfXI0Lbh2HRmslJfIu2cALxPNS6QQBtq-B4LcKId-vFfB69ZJlZtI" },
-
-                 { name: "ashwinbetterinbox", token: "1//0gaBSbBHlfJDiCgYIARAAGBASNwF-L9IrignXj3WeCLd9hkymbenMDFvOhCZLk0RygSqPe2yFlQSsAsIoO7DoLEzXAfSuCkJOm-E" },
+                { name: "liveseedforall", token: "1//0gNNNmMZrjuhzCgYIARAAGBASNwF-L9Ire_zIx2bbnlq3L0wEhELUUmAua3zMtZqCOrLz1RnSu3ZG9DDojjURxcmtEVHkObrknVY" },
+                { name: "agkar9090", token: "1//0gQeu8MkAUYg_CgYIARAAGBASNwF-L9IrmgY1f9Mw1VUva2vfXI0Lbh2HRmslJfIu2cALxPNS6QQBtq-B4LcKId-vFfB69ZJlZtI" },
+                { name: "ashwinbetterinbox", token: "1//0gaBSbBHlfJDiCgYIARAAGBASNwF-L9IrignXj3WeCLd9hkymbenMDFvOhCZLk0RygSqPe2yFlQSsAsIoO7DoLEzXAfSuCkJOm-E" },
                 { name: "musk9090", token: "1//0grSCGJkLq3-iCgYIARAAGBASNwF-L9IrGQ6WKKnQqFsF3mdEby7w7_61P7gvzDJOnffzFYmb3IgglPuk6HbGoyPhYoU2DphePG0" },
                 { name: "liveseedacc", token: "1//0gjFxd6-S5Hp_CgYIARAAGBASNwF-L9IrZVm2MGQUcZWzEXMd_O9U386ObC549czcddU4yADXCp5douRWj5lAc-y2msVcQN9yotk" },
                 { name: "markanthony", token: "1//0gO8mn3pPxlyVCgYIARAAGBASNwF-L9Irn7uzxcpYEL6PfXBFi0W02XFgQapUoHrhW4ZjCdKlMMh9jkQUUtkD7a_yVk0u08QtiUQ" },
                 { name: "liveseedmm", token: "1//0gCjcgsRwdJdjCgYIARAAGBASNwF-L9IrbPt_O9h28YsFQDhUPvhKrw9R1gBqjaoMwpcViwO_KM4QbYSX_xCazjZCk-a5Zr4w6sc" },
                 { name: "arcsan", token: "1//0gLPQLVQXOOdICgYIARAAGBASNwF-L9IrOLm45i-Unbqj4R1cEzcXArQavRMNChkkaAF31QRuBWMpDf3JnvvYEI38HxmFFkxjNQI" },
                 { name: "ashwinsiropn", token: "1//0g28Ag_PhAIfKCgYIARAAGBASNwF-L9Ir7RmQ1p9qJvw0NkMak89UvJSoF16uJ-wUwQd4HxfcINB_MXEFgMm_2lNdb7erKs8fTvE" },
-                
                 { name: "nnon", token: "1//0g6JPvfm-KmumCgYIARAAGBASNwF-L9Ir8m9zW7lyBwp9LhnfDXnTnfix2rl-uT8WO2YXHm4zkrxz1bPl90446GJHm9UneF8tQZs" },
                 { name: "riyasri", token: "1//0ggPC_2ambv59CgYIARAAGBASNwF-L9IrNHjXjPH0bXA1fguO7m5-qZQ_j0jbI9QpREDOzqrP4XuoBSnpwKSy5e6cJd8JJsjljiU" }
-               
             ]
         };
 
         // Inject dynamic account metrics into headers and sidebars
-        document.getElementById('sidebar-accounts-count').textContent = `${CONFIG.accounts.length} Loaded`;
+        document.getElementById('sidebar-accounts-count').textContent = `${CONFIG.accounts.length} Traps`;
         document.getElementById('header-accounts-count').textContent = CONFIG.accounts.length;
 
         const dom = {
@@ -324,11 +586,165 @@
             modalTime: document.getElementById('modal-time'),
             modalBodyFrame: document.getElementById('modal-body-frame'),
             modalBodyFallback: document.getElementById('modal-body-fallback'),
-            toast: document.getElementById('toast-notification')
+            toast: document.getElementById('toast-notification'),
+
+            // 100% Celebration Elements
+            celebrationModal: document.getElementById('celebration-modal'),
+            celebrationOpenPortalBtn: document.getElementById('celebration-open-portal-btn'),
+            celebrationCloseBtn: document.getElementById('celebration-close-btn')
         };
 
+        // Jerry the Mouse Cursor Follower setup
+        const cursor = document.getElementById('jerry-cursor');
+        const cheeseG = document.getElementById('jerry-cheese');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.display = 'block';
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        document.addEventListener('mouseleave', () => {
+            cursor.style.display = 'none';
+        });
+
+        // Speed up wiggles & make Jerry chew cheese on hover states
+        const startChewing = () => {
+            cursor.classList.add('chew-active');
+            cheeseG.style.opacity = '1';
+        };
+        const stopChewing = () => {
+            cursor.classList.remove('chew-active');
+            cheeseG.style.opacity = '0';
+        };
+
+        const scanClickables = () => {
+            document.querySelectorAll('a, button, input, textarea, select, [role="button"], th, td, tr').forEach(item => {
+                item.addEventListener('mouseenter', startChewing);
+                item.addEventListener('mouseleave', stopChewing);
+            });
+        };
+        scanClickables();
+
         let lastResults = [];
-        let showSpamEmails = false; // Spam hidden by default
+        let showSpamEmails = false; 
+        let animationFrameId = null;
+
+        // Custom Text-To-Speech with classic high-impact cartoon voicing saying exactly "100% inbox"
+        function speakInboxPortal() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance("100% inbox");
+                utterance.pitch = 0.85; // Scratchy Tom-like vintage pitch
+                utterance.rate = 1.0;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Star impact explosion generator celebrating around the GIF layout
+        function runFightParticles() {
+            const canvas = document.getElementById('celebration-canvas');
+            const ctx = canvas.getContext('2d');
+            let frameId;
+            
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+
+            const particles = [];
+
+            function spawnPuff() {
+                particles.push({
+                    type: Math.random() > 0.4 ? 'puff' : 'star',
+                    x: canvas.width / 2 + (Math.random() * 200 - 100),
+                    y: canvas.height / 2 + (Math.random() * 200 - 100),
+                    vx: (Math.random() * 8 - 4),
+                    vy: (Math.random() * 8 - 4),
+                    size: Math.random() * 15 + 10,
+                    life: 1.0,
+                    decay: Math.random() * 0.04 + 0.02,
+                    color: Math.random() > 0.5 ? '#e2e8f0' : '#cbd5e1',
+                    rot: Math.random() * Math.PI * 2
+                });
+            }
+
+            function update() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                if (particles.length < 40) {
+                    spawnPuff();
+                }
+
+                particles.forEach((p, idx) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.life -= p.decay;
+                    p.rot += 0.08;
+
+                    if (p.life <= 0) {
+                        particles.splice(idx, 1);
+                        return;
+                    }
+
+                    ctx.save();
+                    ctx.globalAlpha = p.life;
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rot);
+
+                    if (p.type === 'puff') {
+                        ctx.fillStyle = p.color;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    } else {
+                        ctx.fillStyle = '#f59e0b';
+                        ctx.strokeStyle = '#1c130c';
+                        ctx.lineWidth = 1.5;
+                        ctx.beginPath();
+                        const spikes = 5;
+                        const outerRadius = p.size;
+                        const innerRadius = p.size / 2;
+                        let rot = Math.PI / 2 * 3;
+                        let x = 0;
+                        let y = 0;
+                        const step = Math.PI / spikes;
+
+                        ctx.moveTo(0, -outerRadius);
+                        for (let i = 0; i < spikes; i++) {
+                            x = Math.cos(rot) * outerRadius;
+                            y = Math.sin(rot) * outerRadius;
+                            ctx.lineTo(x, y);
+                            rot += step;
+
+                            x = Math.cos(rot) * innerRadius;
+                            y = Math.sin(rot) * innerRadius;
+                            ctx.lineTo(x, y);
+                            rot += step;
+                        }
+                        ctx.lineTo(0, -outerRadius);
+                        ctx.closePath();
+                        ctx.fill();
+                        ctx.stroke();
+                    }
+                    ctx.restore();
+                });
+                
+                frameId = requestAnimationFrame(update);
+            }
+            update();
+            return () => cancelAnimationFrame(frameId);
+        }
+
+        function triggerCelebration() {
+            dom.celebrationModal.classList.remove('hidden');
+            setTimeout(() => {
+                dom.celebrationModal.classList.remove('opacity-0');
+            }, 50);
+
+            speakInboxPortal();
+            if (animationFrameId) animationFrameId();
+            animationFrameId = runFightParticles();
+            scanClickables();
+        }
 
         async function getAccess(refreshToken) {
             const res = await fetch('https://oauth2.googleapis.com/token', {
@@ -346,7 +762,6 @@
             return data.access_token;
         }
 
-        // Base64 helper safe decoders for Gmail structures
         function decodeBase64(data) {
             try {
                 const base64 = data.replace(/-/g, '+').replace(/_/g, '/');
@@ -366,7 +781,6 @@
                 return decodeBase64(payload.body.data);
             }
             if (payload.parts) {
-                // Prioritize rich html, then plain text
                 let htmlPart = payload.parts.find(p => p.mimeType === 'text/html');
                 if (htmlPart && htmlPart.body && htmlPart.body.data) {
                     return decodeBase64(htmlPart.body.data);
@@ -375,7 +789,6 @@
                 if (plainPart && plainPart.body && plainPart.body.data) {
                     return decodeBase64(plainPart.body.data);
                 }
-                // Recursive lookup loop
                 for (let part of payload.parts) {
                     let recursiveResult = extractGmailBody(part);
                     if (recursiveResult) return recursiveResult;
@@ -403,13 +816,11 @@
                     const headers = msgData.payload.headers;
                     const subject = headers.find(h => h.name === 'Subject')?.value || "(Empty Subject)";
                     
-                    // Exact local timestamp setups
                     const dateRaw = headers.find(h => h.name === 'Date')?.value || "";
                     const dateObj = new Date(dateRaw);
                     const date = isNaN(dateObj) ? "" : dateObj.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
                     const time = isNaN(dateObj) ? "" : dateObj.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', hour12: true });
 
-                    // Raw Content extracts for sandbox previews
                     const snippet = msgData.snippet || "";
                     let parsedBody = "";
                     try {
@@ -418,7 +829,6 @@
                         parsedBody = snippet;
                     }
 
-                    // Retrieve tags/labels to register landing folder pathing
                     const labels = msgData.labelIds || [];
                     let landing = 'OTHER';
                     if (labels.includes('SPAM')) {
@@ -448,7 +858,6 @@
             const accountMaps = results.reduce((acc, curr) => {
                 if (!acc[curr.accName]) acc[curr.accName] = new Set();
                 curr.subjects.forEach(s => {
-                    // STRICT RULE: Only map/count subjects that landed successfully in the INBOX (exclude SPAM)
                     if (s.landing !== 'SPAM') {
                         acc[curr.accName].add(s.subject);
                     }
@@ -461,7 +870,7 @@
 
             if (accountNames.length < totalAccounts) {
                 dom.percent.textContent = "...";
-                dom.commonInput.value = "Finalizing data processing sequence...";
+                dom.commonInput.value = "Scouting trap nodes...";
                 return;
             }
 
@@ -487,16 +896,15 @@
                 dom.percent.className = "text-2xl font-black text-emerald-400 italic";
             } else {
                 if (topCount > 1) {
-                    dom.commonInput.value = `Partial Match: "${topSubject}"`;
-                    dom.percent.className = "text-2xl font-black text-indigo-400 italic";
+                    dom.commonInput.value = `Partial Scuffle: "${topSubject}"`;
+                    dom.percent.className = "text-2xl font-black text-amber-500 italic";
                 } else {
-                    dom.commonInput.value = "No shared subject lines detected inside this sequence.";
+                    dom.commonInput.value = "No shared bait subject patterns detected inside this scuffle.";
                     dom.percent.textContent = "0%";
-                    dom.percent.className = "text-2xl font-black text-slate-500 italic";
+                    dom.percent.className = "text-2xl font-black text-stone-500 italic";
                 }
             }
 
-            // NEW RULE: Show the preview trigger if email data is successfully retrieved in Muskan's node (musk9090)
             const muskanAccountName = "musk9090";
             const muskanResult = results.find(item => item.accName === muskanAccountName);
             const hasMuskanMails = muskanResult && muskanResult.subjects && muskanResult.subjects.length > 0;
@@ -504,20 +912,24 @@
             if (hasMuskanMails) {
                 dom.previewTrigger.classList.remove('hidden');
                 
-                // Adjust description depending on match status
                 if (topCount === totalAccounts) {
-                    dom.previewTriggerTitle.textContent = "100% Convergence Match Achieved";
-                    dom.previewTriggerDesc.innerHTML = `Payload verified across all network nodes. Preview is pulled strictly from <strong class="text-indigo-400">Muskan Sharma</strong> (musk9090).`;
+                    dom.previewTriggerTitle.textContent = "100% Convergence Match Locked!";
+                    dom.previewTriggerDesc.innerHTML = `All trap coordinate nodes are synchronized. Peer inside <strong class="text-amber-400">Muskan Sharma</strong> (musk9090) mousehole.`;
                 } else {
-                    dom.previewTriggerTitle.textContent = "Mail Detected in Muskan's Account";
-                    dom.previewTriggerDesc.innerHTML = `Mail landed successfully on <strong class="text-indigo-400">Muskan Sharma's</strong> node (musk9090). Active preview is available for analysis.`;
+                    dom.previewTriggerTitle.textContent = "Mousehole Sighting Activated";
+                    dom.previewTriggerDesc.innerHTML = `Mail spotted inside <strong class="text-amber-400">Muskan's</strong> trap sector (musk9090). Viewport ready.`;
                 }
             } else {
                 dom.previewTrigger.classList.add('hidden');
             }
 
-            // Calculate Spam visibility counters to configure toggle visibility
             updateSpamCounterUI();
+            scanClickables();
+
+            // EXPLICIT TRIGGER: Play Tom & Jerry scuffle GIF overlay on exactly 100% rate
+            if (matchRate === 100) {
+                triggerCelebration();
+            }
         }
 
         function updateSpamCounterUI() {
@@ -532,7 +944,6 @@
                 dom.toggleSpamBtn.classList.add('hidden');
             }
 
-            // Sync visual status of spam elements to global view state variables
             spamElements.forEach(el => {
                 if (showSpamEmails) {
                     el.classList.remove('hidden');
@@ -544,66 +955,65 @@
 
         function renderRow(accName, domain, subjects) {
             const row = document.createElement('tr');
-            row.className = "hover:bg-indigo-500/[0.03] transition-colors group animate-slide";
+            row.className = "hover:bg-amber-500/[0.03] transition-colors group animate-slide";
             
-            // Highlight Muskan Sharma account specifically in UI
             const isMuskan = (accName === 'musk9090');
             const accountLabel = isMuskan 
-                ? `<span class="text-indigo-400 font-black text-sm tracking-tight flex items-center gap-1.5"><i class="fa-solid fa-star text-xs text-amber-400 animate-pulse"></i>${accName}</span>` 
-                : `<span class="text-slate-200 font-black text-sm tracking-tight">${accName}</span>`;
+                ? `<span class="text-amber-400 font-black text-sm tracking-tight flex items-center gap-1.5"><i class="fa-solid fa-star text-xs text-[#E60012] animate-pulse"></i>${accName}</span>` 
+                : `<span class="text-stone-200 font-black text-sm tracking-tight">${accName}</span>`;
 
             const hasData = subjects && subjects.length > 0;
             const statusHtml = hasData 
-                ? `<div class="flex items-center gap-1.5 justify-end text-[9px] font-black text-emerald-400 bg-emerald-400/10 px-3 py-1.5 rounded-full border border-emerald-400/20">VERIFIED INTERACTION</div>`
+                ? `<div class="flex items-center gap-1.5 justify-end text-[9px] font-black text-emerald-400 bg-emerald-400/10 px-3 py-1.5 rounded-full border border-emerald-400/20">TRAP TRIGGERED</div>`
                 : subjects === null 
-                ? `<div class="flex items-center gap-1.5 justify-end text-[9px] font-black text-rose-400 bg-rose-400/10 px-3 py-1.5 rounded-full border border-rose-400/20 text-center">AUTH EXPIRED</div>`
-                : `<div class="flex items-center gap-1.5 justify-end text-[9px] font-black text-slate-500 bg-slate-800 px-3 py-1.5 rounded-full">NO DATA RETRIEVED</div>`;
+                ? `<div class="flex items-center gap-1.5 justify-end text-[9px] font-black text-red-500 bg-red-500/10 px-3 py-1.5 rounded-full border border-red-500/20 text-center">TRAP OFFLINE</div>`
+                : `<div class="flex items-center gap-1.5 justify-end text-[9px] font-black text-stone-500 bg-stone-800 px-3 py-1.5 rounded-full">EMPTY BAIT</div>`;
 
             let subjectsHtml = '';
             if (subjects === null) {
-                subjectsHtml = `<span class="text-rose-400/80 text-xs font-bold">Please update authentication tokens for ${accName}</span>`;
+                subjectsHtml = `<span class="text-red-500 text-xs font-bold">Cat-link broken for ${accName}. Revive OAuth nodes.</span>`;
             } else if (subjects.length === 0) {
-                subjectsHtml = `<span class="text-slate-700 text-xs italic font-medium">Domain match not identified in last inbox scans</span>`;
+                subjectsHtml = `<span class="text-stone-600 text-xs italic font-semibold">Bait subject pattern missed active node sectors</span>`;
             } else {
                 subjectsHtml = subjects.map((s, i) => {
-                    let badgeColor = "bg-slate-500/10 text-slate-400 border border-slate-500/20";
+                    let badgeColor = "bg-stone-500/10 text-stone-400 border border-stone-500/20";
                     let folderIcon = "fa-folder";
                     let isSpam = false;
                     
                     if (s.landing === 'PRIMARY') {
                         badgeColor = "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
-                        folderIcon = "fa-inbox";
+                        folderIcon = "fa-cheese";
                     } else if (s.landing === 'SPAM') {
-                        badgeColor = "bg-rose-500/10 text-rose-400 border border-rose-500/20";
-                        folderIcon = "fa-triangle-exclamation";
+                        badgeColor = "bg-red-500/10 text-red-500 border border-red-500/20";
+                        folderIcon = "fa-skull-crossbones";
                         isSpam = true;
                     } else if (s.landing === 'PROMOTIONS') {
-                        badgeColor = "bg-amber-500/10 text-amber-400 border border-amber-500/20";
+                        badgeColor = "bg-amber-500/10 text-amber-500 border border-amber-500/20";
                         folderIcon = "fa-tags";
                     } else if (s.landing === 'SOCIAL') {
                         badgeColor = "bg-sky-500/10 text-sky-400 border border-sky-500/20";
-                        folderIcon = "fa-users";
+                        folderIcon = "fa-user-group";
                     } else if (s.landing === 'UPDATES') {
                         badgeColor = "bg-purple-500/10 text-purple-400 border border-purple-500/20";
-                        folderIcon = "fa-bell";
+                        folderIcon = "fa-clock";
                     } else if (s.landing === 'FORUMS') {
                         badgeColor = "bg-teal-500/10 text-teal-400 border border-teal-500/20";
-                        folderIcon = "fa-comments";
+                        folderIcon = "fa-message";
                     }
 
                     const spamClass = isSpam ? 'mail-item-spam hidden' : '';
 
                     return `
-                        <div class="mail-item ${spamClass} flex flex-col md:flex-row md:items-center justify-between gap-3 mb-2 p-3 rounded-2xl bg-slate-900/60 border border-slate-800/60 text-xs hover:border-indigo-500/30 transition-all">
+                        <div class="mail-item ${spamClass} flex flex-col md:flex-row md:items-center justify-between gap-3 mb-2 p-3 rounded-2xl bg-[#120b06]/80 border border-amber-500/10 text-xs hover:border-amber-500/40 transition-all">
                             <div class="flex items-center gap-3 overflow-hidden">
-                                <span class="w-5 h-5 flex-shrink-0 flex items-center justify-center text-[8px] font-black bg-slate-800 text-slate-400 rounded-md">${i+1}</span>
-                                <span class="text-slate-100 font-bold truncate max-w-[280px]">${s.subject}</span>
+                                <span class="w-5 h-5 flex-shrink-0 flex items-center justify-center text-[8px] font-black bg-[#1b110a] text-amber-500 rounded-md">${i+1}</span>
+                                <span class="text-stone-200 font-bold truncate max-w-[280px]">${s.subject}</span>
                             </div>
                             <div class="flex items-center gap-2 flex-shrink-0 justify-end">
                                 <span class="inline-flex items-center gap-1.5 text-[9px] font-black uppercase tracking-wider px-2 py-1 rounded ${badgeColor}">
                                     <i class="fa-solid ${folderIcon} text-[8px]"></i> ${s.landing}
                                 </span>
-                                <span class="text-[10px] font-bold text-indigo-400 flex-shrink-0 italic">${s.date} @ ${s.time}</span>
+                                <span class="text-[10px] font-bold text-amber-400 flex-shrink-0 italic">${s.date} @ ${s.time}</span>
                             </div>
                         </div>
                     `;
@@ -612,47 +1022,43 @@
 
             row.innerHTML = `
                 <td class="px-8 py-5">${accountLabel}</td>
-                <td class="px-8 py-5"><span class="text-white font-mono text-xs font-black">${domain}</span></td>
+                <td class="px-8 py-5"><span class="text-amber-400 font-mono text-xs font-black">${domain}</span></td>
                 <td class="px-8 py-5">${subjectsHtml}</td>
                 <td class="px-8 py-5 text-right">${statusHtml}</td>
             `;
             dom.body.appendChild(row);
         }
 
-        // Toggle Spam fold visibility handler
         dom.toggleSpamBtn.addEventListener('click', () => {
             showSpamEmails = !showSpamEmails;
             const spamElements = document.querySelectorAll('.mail-item-spam');
 
             if (showSpamEmails) {
-                // Showing Spam
-                dom.toggleSpamIcon.className = "fa-solid fa-eye text-rose-400 animate-pulse";
+                dom.toggleSpamIcon.className = "fa-solid fa-eye text-red-500 animate-pulse";
                 dom.toggleSpamText.textContent = "Hide Spam Mails";
                 dom.spamCounter.textContent = `${spamElements.length} Revealed`;
-                dom.spamCounter.className = "bg-rose-500/20 text-rose-300 border border-rose-500/30 px-2 py-0.5 rounded text-[10px]";
+                dom.spamCounter.className = "bg-red-500/20 text-red-300 border border-red-500/30 px-2 py-0.5 rounded text-[10px]";
                 spamElements.forEach(el => el.classList.remove('hidden'));
             } else {
-                // Hiding Spam
-                dom.toggleSpamIcon.className = "fa-solid fa-eye-slash text-slate-500";
+                dom.toggleSpamIcon.className = "fa-solid fa-eye-slash text-stone-500";
                 dom.toggleSpamText.textContent = "Show Spam Mails";
                 dom.spamCounter.textContent = `${spamElements.length} Hidden`;
-                dom.spamCounter.className = "bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2 py-0.5 rounded text-[10px]";
+                dom.spamCounter.className = "bg-red-500/10 text-red-400 border border-red-500/20 px-2 py-0.5 rounded text-[10px]";
                 spamElements.forEach(el => el.classList.add('hidden'));
             }
         });
 
-        // Trigger network verification pipeline
         dom.sync.addEventListener('click', async () => {
             const domains = dom.input.value.split('\n').filter(d => d.trim() !== '');
             if (domains.length === 0) return;
 
             dom.sync.disabled = true;
-            dom.sync.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin"></i><span class="tracking-widest">PROBING DATA NODE...</span>`;
+            dom.sync.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin"></i><span class="tracking-widest">BAITING THE TIMELINES...</span>`;
             dom.empty.classList.add('hidden');
             dom.table.classList.remove('hidden');
             dom.clear.classList.remove('hidden');
             dom.commonSec.classList.remove('hidden');
-            dom.previewTrigger.classList.add('hidden'); // Hide preview until check completes
+            dom.previewTrigger.classList.add('hidden');
             dom.body.innerHTML = '';
             lastResults = [];
 
@@ -675,10 +1081,10 @@
 
             calculateCommonality(lastResults);
             dom.sync.disabled = false;
-            dom.sync.innerHTML = `<i class="fa-solid fa-bolt-lightning"></i><span class="tracking-widest uppercase">Sync Network</span>`;
+            dom.sync.innerHTML = `<i class="fa-solid fa-paw"></i><span class="tracking-widest uppercase">Arm Cheese Traps</span>`;
+            scanClickables();
         });
 
-        // Show Toast Notification if Muskan Preview is unavailable
         function showToast() {
             dom.toast.classList.remove('translate-y-12', 'opacity-0');
             dom.toast.classList.add('translate-y-0', 'opacity-100');
@@ -688,14 +1094,10 @@
             }, 5000);
         }
 
-        // Preview Trigger Handler - STRICTLY targeting Muskan Sharma (musk9090)
         dom.showPreviewBtn.addEventListener('click', () => {
             if (lastResults.length === 0) return;
 
-            // Grab the matching top subject value
             const targetSubject = dom.commonInput.value;
-            
-            // Search inside records SPECIFICALLY for Muskan Sharma's account ("musk9090")
             const muskanAccountName = "musk9090";
             const muskanResult = lastResults.find(item => item.accName === muskanAccountName);
 
@@ -704,8 +1106,6 @@
                 return;
             }
 
-            // Find a mail that matches the top common subject.
-            // If none matches (or match is less than 100%), fallback to Muskan's latest retrieved email.
             let matchedEmail = muskanResult.subjects.find(s => s.subject === targetSubject);
             if (!matchedEmail && muskanResult.subjects.length > 0) {
                 matchedEmail = muskanResult.subjects[0];
@@ -716,12 +1116,10 @@
                 dom.modalAccount.textContent = "musk9090 (Muskan Sharma)";
                 dom.modalTime.textContent = `${matchedEmail.date} @ ${matchedEmail.time}`;
 
-                // Check if rich HTML content or plain snippet is available
                 if (matchedEmail.body && matchedEmail.body.includes('<')) {
                     dom.modalBodyFallback.classList.add('hidden');
                     dom.modalBodyFrame.classList.remove('hidden');
 
-                    // INJECT CSS BLOCK: Complete prevention of link hover states and click events inside the iframe
                     const disableLinkInteractionsCSS = `
                         <style>
                             a, a *, [href], [onclick], button, input[type="submit"] {
@@ -735,22 +1133,19 @@
                 } else {
                     dom.modalBodyFrame.classList.add('hidden');
                     dom.modalBodyFallback.classList.remove('hidden');
-                    dom.modalBodyFallback.textContent = matchedEmail.body || matchedEmail.snippet || "No HTML body structure parsed.";
+                    dom.modalBodyFallback.textContent = matchedEmail.body || matchedEmail.snippet || "No Baseboard mousehole HTML body parsed.";
                 }
 
-                // Open modal with smooth transitions
                 dom.previewModal.classList.remove('hidden');
                 setTimeout(() => {
                     dom.previewModal.classList.remove('opacity-0');
                     dom.previewModal.querySelector('div').classList.remove('scale-95');
                 }, 50);
             } else {
-                // Muskan's node loaded but does not contain a previewable subject line
                 showToast();
             }
         });
 
-        // Close preview modal controller
         const hidePreviewModal = () => {
             dom.previewModal.classList.add('opacity-0');
             dom.previewModal.querySelector('div').classList.add('scale-95');
@@ -765,9 +1160,28 @@
             if (e.target === dom.previewModal) hidePreviewModal();
         });
 
+        const closeCelebrationModal = () => {
+            dom.celebrationModal.classList.add('opacity-0');
+            setTimeout(() => {
+                dom.celebrationModal.classList.add('hidden');
+                if (animationFrameId) {
+                    animationFrameId();
+                    animationFrameId = null;
+                }
+            }, 500);
+        };
+
+        dom.celebrationCloseBtn.addEventListener('click', closeCelebrationModal);
+        dom.celebrationOpenPortalBtn.addEventListener('click', () => {
+            closeCelebrationModal();
+            setTimeout(() => {
+                dom.showPreviewBtn.click();
+            }, 300);
+        });
+
         dom.copy.addEventListener('click', () => {
             const val = dom.commonInput.value;
-            if (val && !val.includes('No shared') && !val.includes('Analyzing') && !val.includes('Finalizing')) {
+            if (val && !val.includes('No shared') && !val.includes('Analyzing') && !val.includes('Scouting')) {
                 const el = document.createElement("textarea");
                 el.value = val;
                 document.body.appendChild(el);
@@ -777,10 +1191,10 @@
                 
                 const originalIcon = dom.copy.innerHTML;
                 dom.copy.innerHTML = `<i class="fa-solid fa-check"></i>`;
-                dom.copy.className = dom.copy.className.replace('bg-indigo-600', 'bg-emerald-600');
+                dom.copy.className = dom.copy.className.replace('bg-amber-500', 'bg-emerald-600');
                 setTimeout(() => {
                     dom.copy.innerHTML = originalIcon;
-                    dom.copy.className = dom.copy.className.replace('bg-emerald-600', 'bg-indigo-600');
+                    dom.copy.className = dom.copy.className.replace('bg-emerald-600', 'bg-amber-500');
                 }, 2000);
             }
         });
